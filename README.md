@@ -1,4 +1,70 @@
-# Diamond-3-Hardhat Implementation
+# Diamond-Hardhat Extension
+
+Refactored some of the JS from the mudgen/diamond-3-hardhat repo to lean into Hardhat features. Primarily tasks, but aiming for a simple/extensible testing structure as well. Aiming for a structure I could conceivably use to start throwing reliable/maintainable Diamonds together with less boilerplate/thinking involved (in part because I need it for a stealth project, so updates/example Facet implementations to follow).
+
+## Installation
+
+1. Clone this repo:
+```console
+git clone git@github.com:proggR/diamond-hardhat.git
+```
+
+2. Install NPM packages:
+```console
+cd diamond-hardhat
+npm install
+```
+
+## Deployment
+
+```console
+cp .env.example .env
+. .env
+npx hardhat node --network hardhat
+```
+## Facet Tests
+
+Per-Facet tests are simple to add if you follow the examples in `test/facets/Greeter.ts`, `test/facets/Farewell.ts`, and most critically `test/facets/index.ts` which is all that needs to be changed to add new conforming Facet tests.
+
+A Facet test conforms if: it exposes a `runTest` function that takes the diamond address, the owner, and a counter representing which Facet this is (should account for the 3 Base Facets), and then calls `describe`, passing it the local Facet test callback to execute.
+
+Tests that conform to this pattern need only be required in the `test/facets/index.ts` file and added to the 2 arrays greeter/farewell are currently added to as examples. Non-conforming tests can be added/required/adapted into the `test/Diamond.ts` file.
+
+## Run tests:
+```console
+npx hardhat test
+```
+
+## Tasks
+
+```console
+// Call hello function from GreeterFacet through Diamond contract
+npx hardhat call-hello --network localhost --diamond 0xblah
+
+// Call goodbye function from FarewellFacet through Diamond contract
+npx hardhat call-goodbye --network localhost --diamond 0xblah
+
+// Deploy Facet, but don't cut
+npx hardhat facet-deploy --network localhost --name FarewellFacet
+
+// Deploy & cut new Facet to Diamond
+npx hardhat facet-deploy --network localhost --diamond 0xblah --name FarewellFacet
+
+// Deploy & cut upgrade of Facet to Diamond
+npx hardhat facet-upgrade --network localhost --diamond 0xblah --name FarewellFacet
+
+// Remove & cut Facet from Diamond
+npx hardhat facet-remove --network localhost --diamond 0xblah --name FarewellFacet
+
+// Cut Newly deployed Facet to  Diamond (called by facet-deploy)
+npx hardhat cut-add --network localhost --diamond 0xblah --facet 0xblah --name FarewellFacet
+
+// Cut upgraded Facet to Diamond (called by facet-upgrade)
+npx hardhat cut-replace --network localhost --diamond 0xblah --facet 0xblah --name FarewellFacet
+
+```
+
+# Diamond-3
 
 This is an implementation for [EIP-2535 Diamond Standard](https://github.com/ethereum/EIPs/issues/2535). To learn about other implementations go here: https://github.com/mudgen/diamond
 
@@ -6,26 +72,8 @@ The standard loupe functions have been gas-optimized in this implementation and 
 
 **Note:** The loupe functions in DiamondLoupeFacet.sol MUST be added to a diamond and are required by the EIP-2535 Diamonds standard.
 
-## Installation
 
-1. Clone this repo:
-```console
-git clone git@github.com:mudgen/diamond-3-hardhat.git
-```
-
-2. Install NPM packages:
-```console
-cd diamond-3-hardhat
-npm install
-```
-
-## Deployment
-
-```console
-npx hardhat run scripts/deploy.js
-```
-
-### How the scripts/deploy.js script works
+### How the lib/diamond/deploy.ts script works
 
 1. DiamondCutFacet is deployed.
 1. The diamond is deployed, passing as arguments to the diamond constructor the owner address of the diamond and the DiamondCutFacet address. DiamondCutFacet has the `diamondCut` external function which is used to upgrade the diamond to add more functions.
@@ -33,16 +81,12 @@ npx hardhat run scripts/deploy.js
 1. Facets are deployed.
 1. The diamond is upgraded. The `diamondCut` function is used to add functions from facets to the diamond. In addition the `diamondCut` function calls the `init` function from the `DiamondInit` contract using `delegatecall` to initialize state variables.
 
-How a diamond is deployed is not part of the EIP-2535 Diamonds standard. This implementation shows a usable example. 
+How a diamond is deployed is not part of the EIP-2535 Diamonds standard. This implementation shows a usable example.
 
-## Run tests:
-```console
-npx hardhat test
-```
 
 ## Upgrade a diamond
 
-Check the `scripts/deploy.js` and or the `test/diamondTest.js` file for examples of upgrades.
+Check `tasks/diamond/facet-upgrade.js`, `lib/diamond/facet.ts`, `test/Diamond.ts`, and `test/facets/Farewell.ts` for examples of upgrades.
 
 Note that upgrade functionality is optional. It is possible to deploy a diamond that can't be upgraded, which is a 'Single Cut Diamond'.  It is also possible to deploy an upgradeable diamond and at a later date remove its `diamondCut` function so it can't be upgraded any more.
 
@@ -58,9 +102,9 @@ The `contracts/facets/DiamondLoupeFacet.sol` file shows how to implement the fou
 
 The `contracts/libraries/LibDiamond.sol` file shows how to implement Diamond Storage and a `diamondCut` internal function.
 
-The `scripts/deploy.js` file shows how to deploy a diamond.
+The `lib/diamond/deploy.ts` file shows how to deploy a diamond.
 
-The `test/diamondTest.js` file gives tests for the `diamondCut` function and the Diamond Loupe functions.
+`test/Diamond.ts` and `test/facets/Farewell.ts` gives tests for the `diamondCut` function and the Diamond Loupe functions.
 
 ## How to Get Started Making Your Diamond
 
@@ -98,7 +142,7 @@ string result = MyUsefulFacet(address(diamondContract)).getResult()
 
 ## Get Help and Join the Community
 
-If you need help or would like to discuss diamonds then send me a message [on twitter](https://twitter.com/mudgen), or [email me](mailto:nick@perfectabstractions.com). Or join the [EIP-2535 Diamonds Discord server](https://discord.gg/kQewPw2).
+If you need help or would like to discuss diamonds then send Nick a message [on twitter](https://twitter.com/mudgen), or [email him](mailto:nick@perfectabstractions.com). Or join the [EIP-2535 Diamonds Discord server](https://discord.gg/kQewPw2).
 
 ## Useful Links
 1. [Introduction to the Diamond Standard, EIP-2535 Diamonds](https://eip2535diamonds.substack.com/p/introduction-to-the-diamond-standard)
@@ -113,13 +157,19 @@ If you need help or would like to discuss diamonds then send me a message [on tw
 
 This example implementation was written by Nick Mudge.
 
-Contact:
+Hardhat Tasks and some adjustments to the JS library made by @proggR
+
+Contact Nick:
 
 - https://twitter.com/mudgen
 - nick@perfectabstractions.com
+
+Contact @proggR:
+
+- https://deit.ca
+- proggR@pm.me
 
 ## License
 
 MIT license. See the license file.
 Anyone can use or modify this software for their purposes.
-

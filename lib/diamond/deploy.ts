@@ -1,9 +1,7 @@
-/* global ethers */
-/* eslint prefer-const: "off" */
+const { getSelectors, FacetCutAction } = require('./diamond.ts')
 
-const { getSelectors, FacetCutAction } = require('./libraries/diamond.js')
 
-async function deployDiamond () {
+const deployDiamond = async () =>  {
   const accounts = await ethers.getSigners()
   const contractOwner = accounts[0]
 
@@ -48,8 +46,7 @@ async function deployDiamond () {
   }
 
   // upgrade diamond with facets
-  console.log('')
-  console.log('Diamond Cut:', cut)
+  // @TODO: update facets file to take in a functionCall param to nix all dis
   const diamondCut = await ethers.getContractAt('IDiamondCut', diamond.address)
   let tx
   let receipt
@@ -65,15 +62,9 @@ async function deployDiamond () {
   return diamond.address
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
-if (require.main === module) {
-  deployDiamond()
-    .then(() => process.exit(0))
-    .catch(error => {
-      console.error(error)
-      process.exit(1)
-    })
+function deployFunc() {
+    console.log("Hi! I help, not deploy")
 }
 
 exports.deployDiamond = deployDiamond
+module.exports.default = deployFunc
