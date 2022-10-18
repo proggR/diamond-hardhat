@@ -1,14 +1,17 @@
 const { expect, assert } = require("chai");
 const {
+  FacetCutAction,
   get,
   getSelectors,
 } = require('../../lib/diamond/diamond.ts')
+const { deployFacets, removeFacets } = require('../../lib/diamond/facet.ts')
 // REQUIRED: name set, and diamond/owner/count as params to runTest
 // NOTE: count should include base diamond count (so +3). will need -1 for address idx
 const name = "PersistentFacet2"
 let diamond
 let owner
 let count
+const zeroAddress = '0x0000000000000000000000000000000000000000'
 
 const runTest = (dAddress, dOwner,ctr) => {
   diamond = dAddress
@@ -99,6 +102,72 @@ const test = async() => {
         'HOLA',
         await facet.getDS()
       )
+  })
+
+  it('Should remove itself and have the zero address + error when getDS is called (0xa32e0f3f)', async () => {
+    let selector = get(getSelectors(facet),['getDS()'])[0];
+    console.log("SELECTOR: ", selector)
+    let idx = count-1
+    const oldAddress = await diamondLoupeFacet.facetAddress(selector)
+    // console.log('Farewell Diamond fetched:', oldAddress)
+    const facetContracts = await removeFacets(diamondAddress,["PersistentFacet2"]);
+    const newAddress = await diamondLoupeFacet.facetAddress(selector)
+    // console.log('Farewell Diamond replaced:', newAddress)
+
+    assert.notEqual(
+      oldAddress,
+      newAddress
+    )
+    try{
+      //it should actually throw an error. not sure how to handle less grossly atm
+      assert.notEqual(
+        'HOLA',
+        await facet.getDS()
+      )
+    }catch(error){
+      // console.log("CAUGHT (BUT WANTED IT TO FAIL)",error)
+      assert.equal(true,true)
+    }
+  })
+
+  it('Should readd itself and once again get HOLA from getDS (0xa32e0f3f)', async () => {
+    let selector = get(getSelectors(facet),['getDS()'])[0];
+    let idx = count-1
+    const oldAddress = await diamondLoupeFacet.facetAddress(selector)
+    assert.equal(
+      oldAddress,
+      zeroAddress
+    )
+    await deployFacets(diamondAddress,FacetCutAction.Add,["PersistentFacet2"]);
+    const newAddress = await diamondLoupeFacet.facetAddress(selector)
+    // console.log('Farewell Diamond replaced:', newAddress)
+
+    assert.notEqual(
+      oldAddress,
+      newAddress
+    )
+
+    assert.equal(
+      'HOLA',
+      await facet.getDS()
+    )
+
+  })
+
+  it('Should get "MESSAGE1" back from M1 (if AppStorage is working after upgrade)', async () => {
+    // console.log('Greeter Diamond fetched:', facet.address)
+    assert.equal(
+      'MESSAGE1',
+      await facet.l1()
+    )
+  })
+
+  it('Should get "MESSAGE2" back from M2 (if AppStorage is working after upgrade)', async () => {
+    // console.log('Greeter Diamond fetched:', facet.address)
+    assert.equal(
+      'MESSAGE2',
+      await facet.l2()
+    )
   })
 
 }

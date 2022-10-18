@@ -3,28 +3,17 @@ pragma solidity ^0.8.0;
 
 import { LibDiamond } from "../libraries/LibDiamond.sol";
 import "./AppStorageFacet.sol";
-/* import "./DiamondStorageFacet.sol"; */
+import "./DiamondStorageFacet.sol";
 
-contract PersistentFacet2 is AppStorageFacet {
-
-    struct FacetTestData {
-      string greeting;
-    }
-
-    function facetStorage() internal pure returns (FacetTestData storage ds) {
-        bytes32 position =  keccak256("diamond.test.diamond.storage");
-        assembly {
-            ds.slot := position
-        }
-    }
+contract PersistentFacet2 is AppStorageFacet, DiamondStorageFacet {
 
     function setDS(string memory msg_) external {
-      FacetTestData storage _ds = facetStorage();
+      FacetTestStorage storage _ds = facetStorage();
       _ds.greeting = msg_;
     }
 
     function getDS() external view returns (string memory){
-      FacetTestData storage _ds = facetStorage();
+      FacetTestStorage storage _ds = facetStorage();
       return _ds.greeting;
     }
 
