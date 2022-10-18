@@ -6,3 +6,5 @@ export { DiamondLoupeFacet__factory } from "./DiamondLoupeFacet__factory";
 export { FarewellFacet__factory } from "./FarewellFacet__factory";
 export { GreeterFacet__factory } from "./GreeterFacet__factory";
 export { OwnershipFacet__factory } from "./OwnershipFacet__factory";
+export { PersistentFacet1__factory } from "./PersistentFacet1__factory";
+export { PersistentFacet2__factory } from "./PersistentFacet2__factory";

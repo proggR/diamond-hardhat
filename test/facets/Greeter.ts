@@ -45,8 +45,8 @@ const test = async() => {
 
 
   it('Should respond to hello (0x19ff1d21)', async () => {
-    // let selector = get(getSelectors(facet),['hello()']);
-    // console.log("FUNCTIONS: "+selector[0])
+    let selector = get(getSelectors(facet),['hello()']);
+    console.log("FUNCTIONS: "+selector[0])
     let idx = count-1
 
     assert.equal(

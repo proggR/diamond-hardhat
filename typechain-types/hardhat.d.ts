@@ -37,6 +37,14 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.OwnershipFacet__factory>;
     getContractFactory(
+      name: "PersistentFacet1",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.PersistentFacet1__factory>;
+    getContractFactory(
+      name: "PersistentFacet2",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.PersistentFacet2__factory>;
+    getContractFactory(
       name: "IDiamondCut",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IDiamondCut__factory>;
@@ -91,6 +99,16 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.OwnershipFacet>;
+    getContractAt(
+      name: "PersistentFacet1",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.PersistentFacet1>;
+    getContractAt(
+      name: "PersistentFacet2",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.PersistentFacet2>;
     getContractAt(
       name: "IDiamondCut",
       address: string,
