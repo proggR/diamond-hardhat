@@ -11,12 +11,13 @@ const { deployFacets } = require('../lib/diamond/facet.ts')
 var facets = require('./facets')
 const { expect, assert } = require("chai");
 
+let diamondAddress
+let facetContracts
 
 const diamondTest = async () => {
   let accounts
   let contractOwner
 
-  let diamondAddress
   let diamondCutFacet
   let diamondLoupeFacet
   let ownershipFacet
@@ -86,7 +87,7 @@ const diamondTest = async () => {
     const FacetNames = facets.facetNames()
 
     try{
-      const facetContracts = await deployFacets(diamondAddress,FacetCutAction.Add,FacetNames);
+      facetContracts = await deployFacets(diamondAddress,FacetCutAction.Add,FacetNames);
     }catch(e){
       console.log("ERROR")
       console.log(e)
@@ -98,9 +99,22 @@ const diamondTest = async () => {
   })
 
   it('Should test the facets', async () => {
-    for (const facet of facets.getFacets()) {
+    const test = async() =>{
+      for (const facet of facets.getFacets()) {
+        ctr++
+        await facet.runTest(diamondAddress, contractOwner,ctr);
+      }
+    }
+    await test()
+  })
+
+  it('Should complete', async () => {
+    const FacetNames = facets.facetNames()
+    console.log("TEST DIAMOND DEPLOYED: ",diamondAddress)
+    let ctr = 0
+    for(const Facet of facetContracts){
+      console.log(FacetNames[ctr],':',Facet.address)
       ctr++
-      await facet.runTest(diamondAddress, contractOwner,ctr);
     }
   })
 
