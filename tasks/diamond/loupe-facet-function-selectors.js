@@ -7,10 +7,10 @@ task("loupe-facet-function-selectors", "Calls facetFunctionSelectors function us
 
     const Facet = await ethers.getContractFactory("DiamondLoupeFacet")
     const facet = new ethers.Contract(taskArgs.diamond,Facet.interface, signer)
-    console.log('DiamondLoupeFacet fetched:', facet.address)
 
     const tx = await facet.facetFunctionSelectors(taskArgs.facet)
     console.log("RESPONSE: ",tx)
-  })
+  }
+)
 
 module.exports = {}

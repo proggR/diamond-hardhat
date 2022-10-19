@@ -5,11 +5,11 @@ task("loupe-facets", "Calls facets function using the Loupe interface")
     const signer = accounts[0]
 
     const Facet = await ethers.getContractFactory("DiamondLoupeFacet")
-    const facet = new ethers.Contract(taskArgs.diamond,Facet.interface, signer)
-    console.log('DiamondLoupeFacet fetched:', facet.address)
+    const facet = new ethers.Contract(taskArgs.diamond,Facet.interface, signer)    
 
     const tx = await facet.facets()
     console.log("RESPONSE: ",tx)
-  })
+  }
+)
 
 module.exports = {}

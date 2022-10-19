@@ -7,10 +7,10 @@ task("loupe-facet-address", "Calls facets facetAddresses using the Loupe interfa
 
     const Facet = await ethers.getContractFactory("DiamondLoupeFacet")
     const facet = new ethers.Contract(taskArgs.diamond,Facet.interface, signer)
-    console.log('DiamondLoupeFacet fetched:', facet.address)
 
     const tx = await facet.facetAddress(taskArgs.func)
     console.log("RESPONSE: ",tx)
-  })
+  }
+)
 
 module.exports = {}

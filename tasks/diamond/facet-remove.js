@@ -1,4 +1,3 @@
-//const {deployments} = require("hardhat")
 const  diamondLib  = require('../../lib/diamond/diamond.ts')
 const  facetLib  = require('../../lib/diamond/facet.ts')
 
@@ -9,7 +8,6 @@ task("facet-remove", "Removes a facet from a diamond")
     const contractAddr = taskArgs.diamond
     const networkId = network.name
 
-    console.log("Cutting new facet on Diamondcontract ", contractAddr, " on network ", networkId)
     const facets = [taskArgs.name]
     await facetLib.removeFacets(contractAddr,facets);
     console.log("Finished cut")
@@ -17,6 +15,7 @@ task("facet-remove", "Removes a facet from a diamond")
     if (["hardhat", "localhost", "ganache"].indexOf(network.name) >= 0) {
       console.log("You'll have to manually update the value since you're on a local chain!")
     }
-  })
+  }
+)
 
 module.exports = {}

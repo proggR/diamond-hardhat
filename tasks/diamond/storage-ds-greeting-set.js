@@ -7,7 +7,6 @@ task("storage-ds-greeting-set", "Gets the current greeting value from diamond st
 
     const Facet = await ethers.getContractFactory("PersistentFacet2")
     const facet = new ethers.Contract(taskArgs.diamond,Facet.interface, signer)
-    console.log('Persistent 2 facet fetched:', facet.address)
 
     let tx = await facet.setDS(taskArgs.greeting)
     let rx = await tx.wait()
@@ -17,6 +16,7 @@ task("storage-ds-greeting-set", "Gets the current greeting value from diamond st
     if (["hardhat", "localhost", "ganache"].indexOf(network.name) >= 0) {
       console.log("You'll have to manually update the value since you're on a local chain!")
     }
-  })
+  }
+)
 
 module.exports = {}

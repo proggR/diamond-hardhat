@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 import { LibDiamond } from "../libraries/LibDiamond.sol";
-import "./AppStorageFacet.sol";
+import "../storage/facets/AppStorageFacet.sol";
 
 contract PersistentFacet1 is AppStorageFacet {
 

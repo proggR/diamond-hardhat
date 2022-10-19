@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import { LibDiamond } from "../libraries/LibDiamond.sol";
-import "./AppStorage.sol";
+import { LibDiamond } from "../../libraries/LibDiamond.sol";
+import "../structs/AppStorage.sol";
 
 contract AppStorageFacet {
     AppStorage internal s;

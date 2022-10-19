@@ -1,4 +1,6 @@
 exports.diamond = require("./diamond")
+exports.erc173 = require("./erc173")
+exports.erc165 = require("./erc165")
 exports.accounts = require("./accounts")
 exports.balance = require("./balance")
 exports.blockNumber = require("./block-number")
