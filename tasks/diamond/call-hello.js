@@ -6,7 +6,6 @@ task("call-hello", "Calls greeter function")
 
     const Facet = await ethers.getContractFactory("GreeterFacet")
     const facet = new ethers.Contract(taskArgs.diamond,Facet.interface, signer)
-    console.log('Greeter Diamond fetched: ', facet.address)
 
     const tx = await facet.hello()
     console.log("RESPONSE: ",tx)

@@ -3,6 +3,8 @@ const {
   get,
   getSelectors,
 } = require('../../lib/diamond/diamond.ts')
+
+
 // REQUIRED: name set, and diamond/owner/count as params to runTest
 // NOTE: count should include base diamond count (so +3). will need -1 for address idx
 const name = "PersistentFacet1"
@@ -24,13 +26,6 @@ const test = async() => {
   let facet
   let diamondLoupeFacet
 
-
-  // let diamondCutFacet
-  // let ownershipFacet
-  // let tx
-  // let receipt
-  // let result
-
   before(async() => {
     contractOwner = owner;
     diamondAddress = diamond;
@@ -38,22 +33,7 @@ const test = async() => {
     facet = new ethers.Contract(diamondAddress,Facet.interface, contractOwner)
     diamondLoupeFacet = await ethers.getContractAt('DiamondLoupeFacet', diamondAddress)
     addresses = await diamondLoupeFacet.facetAddresses()
-
-    //   diamondCutFacet = await ethers.getContractAt('DiamondCutFacet', diamondAddress)
-    //   ownershipFacet = await ethers.getContractAt('OwnershipFacet', diamondAddress)
   })
-
-
-  // it('Should respond to hello (0x19ff1d21)', async () => {
-  //   // let selector = get(getSelectors(facet),['hello()']);
-  //   // console.log("FUNCTIONS: "+selector[0])
-  //   let idx = count-1
-  //
-  //   assert.equal(
-  //     addresses[idx],
-  //     await diamondLoupeFacet.facetAddress('0x19ff1d21')
-  //   )
-  // })
 
   it('Should fail when fetching M1', async () => {
     try{
@@ -63,7 +43,6 @@ const test = async() => {
         await facet.loadM1()
       )
     }catch(error){
-      // console.log("CAUGHT (BUT WANTED IT TO FAIL)",error)
       assert.equal(true,true)
     }
   })
@@ -76,13 +55,11 @@ const test = async() => {
         await facet.loadM2()
       )
     }catch(error){
-      // console.log("CAUGHT (BUT WANTED IT TO FAIL)",error)
       assert.equal(true,true)
     }
   })
 
   it('Should set M1 to "MESSAGE1"', async () => {
-    // console.log('Greeter Diamond fetched:', facet.address)
     await facet.setM1('MESSAGE1')
   })
 
@@ -91,7 +68,6 @@ const test = async() => {
   })
 
   it('Should get "MESSAGE1" back from M1', async () => {
-    // console.log('Greeter Diamond fetched:', facet.address)
     assert.equal(
       'MESSAGE1',
       await facet.loadM1()
@@ -99,7 +75,6 @@ const test = async() => {
   })
 
   it('Should get "MESSAGE2" back from M2', async () => {
-    // console.log('Greeter Diamond fetched:', facet.address)
     assert.equal(
       'MESSAGE2',
       await facet.loadM2()

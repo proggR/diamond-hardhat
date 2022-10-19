@@ -1,8 +1,7 @@
 const { get, getSelector, getSelectors, FacetCutAction } = require('./diamond.ts')
 
 const zeroAddress = '0x0000000000000000000000000000000000000000'
-
-
+const _gasLimit = 10000000
 
 const deployFacets = async (diamondAddress, CutAction, FacetNames) =>  {
   const accounts = await ethers.getSigners()
@@ -14,24 +13,23 @@ const deployFacets = async (diamondAddress, CutAction, FacetNames) =>  {
     await facet.deployed();
     facets.push(facet);
   }
-  return cutFacets(accounts, diamondAddress,CutAction,facets)
+  return cutFacets(diamondAddress,CutAction,facets)
 }
 
 const removeFacets = async (diamondAddress, FacetNames) =>  {
   const accounts = await ethers.getSigners()
   const contractOwner = accounts[0]
-  const facets = []
+  let facets = []
   for (const FacetName of FacetNames) {
     const Facet = await ethers.getContractFactory(FacetName);
     const facet = new ethers.Contract(zeroAddress,Facet.interface,contractOwner)
     facets.push(facet);
   }
-  return cutFacets(accounts, diamondAddress,2,facets)
+  return cutFacets(diamondAddress,2,facets)
 }
 
-const cutFacets = async (accounts, diamondAddress, CutAction, facets) =>  {
-  // const accounts = await ethers.getSigners()
-  // const contractOwner = accounts[0]
+const cutFacets = async (diamondAddress, CutAction, facets) =>  {
+  const accounts = await ethers.getSigners()
   let cut = []
   for (const facet of facets) {
       cut.push({
@@ -41,7 +39,6 @@ const cutFacets = async (accounts, diamondAddress, CutAction, facets) =>  {
     });
   }
 
-
   const diamondCut = await ethers.getContractAt('IDiamondCut', diamondAddress)
 
   let tx
@@ -50,7 +47,7 @@ const cutFacets = async (accounts, diamondAddress, CutAction, facets) =>  {
   let functionCall = ethers.utils.formatBytes32String("");
 
   tx = await diamondCut.diamondCut(cut, zeroAddress, functionCall,{
-    gasLimit: 800000
+    gasLimit: _gasLimit
   })
   receipt = await tx.wait()
   if (!receipt.status) {

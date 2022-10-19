@@ -2,6 +2,11 @@
 
 const FacetCutAction = { Add: 0, Replace: 1, Remove: 2 }
 
+const selector = (facet) => {
+  let selection = get(getSelectors(facet),['goodbye()']);
+  console.log("FUNCTIONS: "+selection[0])
+}
+
 // get function selectors from ABI
 const getSelectors = (contract) => {
   const signatures = Object.keys(contract.interface.functions)

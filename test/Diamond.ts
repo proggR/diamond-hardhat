@@ -8,7 +8,7 @@ const {
 
 const { deployDiamond } = require('../lib/diamond/deploy.ts')
 const { deployFacets } = require('../lib/diamond/facet.ts')
-var facets = require('./facets')
+const { facets } = require('./facets')
 const { expect, assert } = require("chai");
 
 let diamondAddress
@@ -89,7 +89,6 @@ const diamondTest = async () => {
     try{
       facetContracts = await deployFacets(diamondAddress,FacetCutAction.Add,FacetNames);
     }catch(e){
-      console.log("ERROR")
       console.log(e)
       assert(true,false)
     }
@@ -110,7 +109,6 @@ const diamondTest = async () => {
 
   it('Should complete', async () => {
     const FacetNames = facets.facetNames()
-    console.log("TEST DIAMOND DEPLOYED: ",diamondAddress)
     let ctr = 0
     for(const Facet of facetContracts){
       console.log(FacetNames[ctr],':',Facet.address)
@@ -128,4 +126,12 @@ const diamondTest = async () => {
 
 }
 
-describe("Diamond Test", diamondTest);
+const coreTest = async() => {
+  describe("Diamond Test", diamondTest);
+  return {msg:'Success'}
+}
+
+coreTest().then((data)=>{
+  console.log("AND WE'VE ARRIVED")
+  console.log(data.msg)
+})

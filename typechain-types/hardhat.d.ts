@@ -33,6 +33,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.GreeterFacet__factory>;
     getContractFactory(
+      name: "MockERC20Facet",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.MockERC20Facet__factory>;
+    getContractFactory(
       name: "OwnershipFacet",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.OwnershipFacet__factory>;
@@ -60,6 +64,10 @@ declare module "hardhat/types/runtime" {
       name: "IERC173",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC173__factory>;
+    getContractFactory(
+      name: "IERC20",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC20__factory>;
     getContractFactory(
       name: "LibDiamond",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -95,6 +103,11 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.GreeterFacet>;
     getContractAt(
+      name: "MockERC20Facet",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.MockERC20Facet>;
+    getContractAt(
       name: "OwnershipFacet",
       address: string,
       signer?: ethers.Signer
@@ -129,6 +142,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.IERC173>;
+    getContractAt(
+      name: "IERC20",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC20>;
     getContractAt(
       name: "LibDiamond",
       address: string,

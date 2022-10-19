@@ -7,7 +7,7 @@ const {
 
 // REQUIRED: name set, and diamond/owner/count as params to runTest
 // NOTE: count should include base diamond count (so +3). will need -1 for address idx
-const name = "GreeterFacet"
+const name = "MockERC20Facet"
 let diamond
 let owner
 let count
@@ -16,7 +16,7 @@ const runTest = (dAddress, dOwner,ctr) => {
   diamond = dAddress
   owner = dOwner
   count = ctr
-  describe("Greeter Test",test)
+  describe("MockERC20 (DS for standard, AS for app level data) Test",test)
 }
 
 const test = async() => {
@@ -29,33 +29,33 @@ const test = async() => {
   before(async() => {
     contractOwner = owner;
     diamondAddress = diamond;
-    const Facet = await ethers.getContractFactory("GreeterFacet")
+    const Facet = await ethers.getContractFactory("MockERC20Facet")
     facet = new ethers.Contract(diamondAddress,Facet.interface, contractOwner)
     diamondLoupeFacet = await ethers.getContractAt('DiamondLoupeFacet', diamondAddress)
     addresses = await diamondLoupeFacet.facetAddresses()
   })
 
-
-  it('Should respond to hello (0x19ff1d21)', async () => {
-    let selector = get(getSelectors(facet),['hello()']);
-    let idx = count-1
-    assert.equal(
-      addresses[idx],
-      await diamondLoupeFacet.facetAddress('0x19ff1d21')
-    )
+  it('Should have a total supply larger than 0', async () => {
+    const signers =  await ethers.getSigners();
+    const signer = signers[0]
+    const tx = await facet.construct()
+    const total = await facet.totalSupply()
+    expect(total).to.be.greaterThan(0)
   })
 
-  it('Should get "hola" back from hello call (0x19ff1d21)', async () => {
-    assert.equal(
-      'hola',
-      await facet.hello()
-    )
+  it('Should have total supply when calling balanceOf(signer) and totalSupply()', async () => {
+    const signers =  await ethers.getSigners();
+    const signer = signers[0]
+    const balance = await facet.balanceOf(signer.address)
+    const total = await facet.totalSupply()
+    expect(balance).to.be.equal(total)
   })
+
 }
 
-const greeter = () => {
+const mockerc20 = () => {
 }
 
 exports.name = name
 exports.runTest = runTest
-module.export = greeter
+module.export = mockerc20

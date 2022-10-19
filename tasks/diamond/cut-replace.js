@@ -17,7 +17,6 @@ task("cut-replace", "Replaces a facet on a diamond")
     const facets = [facetContract]
 
     await facetLib.cutFacets(contractAddr,diamondLib.FacetCutAction.Replace,facets);
-    console.log("Finished cut")
 
     if (["hardhat", "localhost", "ganache"].indexOf(network.name) >= 0) {
       console.log("You'll have to manually update the value since you're on a local chain!")
