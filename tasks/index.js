@@ -1,5 +1,6 @@
 exports.diamond = require("./diamond")
 exports.erc20 = require("./erc20")
+exports.erc20 = require("./erc721")
 exports.erc173 = require("./erc173")
 exports.erc165 = require("./erc165")
 exports.accounts = require("./accounts")

@@ -25,7 +25,7 @@ import type {
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "../common";
+} from "../../common";
 
 export interface MockERC20FacetInterface extends utils.Interface {
   functions: {
@@ -34,8 +34,6 @@ export interface MockERC20FacetInterface extends utils.Interface {
     "balanceOf(address)": FunctionFragment;
     "construct()": FunctionFragment;
     "decimals()": FunctionFragment;
-    "name()": FunctionFragment;
-    "symbol()": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "transfer(address,uint256)": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
@@ -48,8 +46,6 @@ export interface MockERC20FacetInterface extends utils.Interface {
       | "balanceOf"
       | "construct"
       | "decimals"
-      | "name"
-      | "symbol"
       | "totalSupply"
       | "transfer"
       | "transferFrom"
@@ -69,8 +65,6 @@ export interface MockERC20FacetInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "construct", values?: undefined): string;
   encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
-  encodeFunctionData(functionFragment: "name", values?: undefined): string;
-  encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "totalSupply",
     values?: undefined
@@ -93,8 +87,6 @@ export interface MockERC20FacetInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "construct", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "totalSupply",
     data: BytesLike
@@ -188,10 +180,6 @@ export interface MockERC20Facet extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
-    name(overrides?: CallOverrides): Promise<[string]>;
-
-    symbol(overrides?: CallOverrides): Promise<[string]>;
-
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
@@ -231,10 +219,6 @@ export interface MockERC20Facet extends BaseContract {
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
-  name(overrides?: CallOverrides): Promise<string>;
-
-  symbol(overrides?: CallOverrides): Promise<string>;
-
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
@@ -271,10 +255,6 @@ export interface MockERC20Facet extends BaseContract {
     construct(overrides?: CallOverrides): Promise<boolean>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
-
-    name(overrides?: CallOverrides): Promise<string>;
-
-    symbol(overrides?: CallOverrides): Promise<string>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -340,10 +320,6 @@ export interface MockERC20Facet extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
-    name(overrides?: CallOverrides): Promise<BigNumber>;
-
-    symbol(overrides?: CallOverrides): Promise<BigNumber>;
-
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
@@ -383,10 +359,6 @@ export interface MockERC20Facet extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

@@ -6,6 +6,7 @@ export type { DiamondLoupeFacet } from "./DiamondLoupeFacet";
 export type { FarewellFacet } from "./FarewellFacet";
 export type { GreeterFacet } from "./GreeterFacet";
 export type { MockERC20Facet } from "./MockERC20Facet";
+export type { MockERC721Facet } from "./MockERC721Facet";
 export type { OwnershipFacet } from "./OwnershipFacet";
 export type { PersistentFacet1 } from "./PersistentFacet1";
 export type { PersistentFacet2 } from "./PersistentFacet2";

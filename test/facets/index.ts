@@ -3,6 +3,7 @@ var farewell = require('./Farewell.ts')
 var persistent1 = require('./Persistent1.ts')
 var persistent2 = require('./Persistent2.ts')
 var mockerc20 = require('./MockERC20.ts')
+var mockerc721 = require('./MockERC721.ts')
 
 // @NOTE: The comments
 // Still super jank version that's limiting in many ways, the comments attempt to
@@ -23,7 +24,8 @@ const getFacets = () => {
   // return [mockerc20] // NEW FACET
   // return [greeter,farewell, persistent1, persistent2, mockerc20]  // DESIRED FULL LIST
   // return [greeter,farewell, persistent1, persistent2]
-  return [greeter,farewell, persistent1, persistent2,mockerc20] // CURRENT WORKING LIST
+  // return [greeter,farewell, persistent1, persistent2,mockerc20] // CURRENT WORKING LIST
+  return [greeter,farewell, persistent1, persistent2,mockerc721] // CURRENT WORKING LIST
 }
 
 // This is used to deploy the facets
@@ -31,7 +33,8 @@ const names = () => {
   // return [mockerc20.name] // NEW FACET
   // return [greeter.name,farewell.name, persistent1.name, persistent2.name, mockerc20.name]   // DESIRED FULL LIST
   // return [greeter.name,farewell.name, persistent1.name, persistent2.name]
-  return [greeter.name, farewell.name, persistent1.name, persistent2.name, mockerc20.name] // CURRENT WORKING LIST
+  // return [greeter.name, farewell.name, persistent1.name, persistent2.name, mockerc20.name] // CURRENT WORKING LIST
+  return [greeter.name, farewell.name, persistent1.name, persistent2.name, mockerc721.name] // CURRENT WORKING LIST
 }
 
 let availableFacets = {
@@ -40,6 +43,7 @@ let availableFacets = {
   persistent1:persistent1,
   persistent2:persistent2,
   mockerc20:mockerc20,
+  mockerc721:mockerc721,
   facetNames:names,
   getFacets:getFacets
 }
