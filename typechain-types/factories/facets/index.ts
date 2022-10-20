@@ -5,6 +5,7 @@ export { DiamondCutFacet__factory } from "./DiamondCutFacet__factory";
 export { DiamondLoupeFacet__factory } from "./DiamondLoupeFacet__factory";
 export { FarewellFacet__factory } from "./FarewellFacet__factory";
 export { GreeterFacet__factory } from "./GreeterFacet__factory";
+export { MockERC1155Facet__factory } from "./MockERC1155Facet__factory";
 export { MockERC20Facet__factory } from "./MockERC20Facet__factory";
 export { MockERC721Facet__factory } from "./MockERC721Facet__factory";
 export { OwnershipFacet__factory } from "./OwnershipFacet__factory";
