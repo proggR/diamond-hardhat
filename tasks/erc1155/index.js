@@ -1,2 +1,7 @@
 exports.erc1155Balance = require("./erc1155-balance.js")
 exports.erc1155TotalSupply = require("./erc1155-total-supply.js")
+exports.erc1155BalanceBatch = require("./erc1155-balance-batch.js")
+exports.erc1155ApprovedForAll = require("./erc1155-is-approved-for-all.js")
+exports.erc1155SafeBatchTransferFrom = require("./erc1155-safe-batch-transfer-from.js")
+exports.erc1155SafeTransferFrom = require("./erc1155-safe-transfer-from.js")
+exports.erc1155SetApprovedForAll = require("./erc1155-set-approved-for-all.js")

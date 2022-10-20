@@ -41,7 +41,7 @@ const test = async() => {
     addresses = await diamondLoupeFacet.facetAddresses()
   })
 
-  it('Should respond to goodbye (0x75fc8e3c)', async () => {
+  step('Should respond to goodbye (0x75fc8e3c)', async () => {
     // let selector = get(getSelectors(facet),['goodbye()']);
     // console.log("FUNCTIONS: "+selector[0])
     let idx = count-1
@@ -51,14 +51,14 @@ const test = async() => {
     )
   })
 
-  it('Should get "adios" back from goodbye call (0x75fc8e3c)', async () => {
+  step('Should get "adios" back from goodbye call (0x75fc8e3c)', async () => {
     assert.equal(
       'adios',
       await facet.goodbye()
     )
   })
 
-  it('Should replace itself and with a new contract address still get "adios" back from goodbye call (0x75fc8e3c)', async () => {
+  step('Should replace itself and with a new contract address still get "adios" back from goodbye call (0x75fc8e3c)', async () => {
     let idx = count-1
     const oldAddress = await diamondLoupeFacet.facetAddress('0x75fc8e3c')
     const facetContracts = await deployFacets(diamondAddress,FacetCutAction.Replace,["FarewellFacet"]);
@@ -73,7 +73,7 @@ const test = async() => {
     )
   })
 
-  it('Should remove itself and have the zero address + error when goodbye is called (0x75fc8e3c)', async () => {
+  step('Should remove itself and have the zero address + error when goodbye is called (0x75fc8e3c)', async () => {
     let idx = count-1
     const oldAddress = await diamondLoupeFacet.facetAddress('0x75fc8e3c')
     const facetContracts = await removeFacets(diamondAddress,["FarewellFacet"]);
@@ -92,7 +92,7 @@ const test = async() => {
     }
   })
 
-  it('Should readd itself and once again get adios from goodbye (0x75fc8e3c)', async () => {
+  step('Should readd itself and once again get adios from goodbye (0x75fc8e3c)', async () => {
     let idx = count-1
     const oldAddress = await diamondLoupeFacet.facetAddress('0x75fc8e3c')
     assert.equal(

@@ -22,13 +22,19 @@ cp .env.example .env
 . .env
 npx hardhat node --network hardhat
 ```
+## Mock Facets
+
+Includes mock implementations for ERC20, ERC721, and ERC1155 facets built leveraging diamond storage, including tests and management tasks to varying degrees of coverage.
+
+Additional EIPs being researched for inclusion: ERC137, ERC681, ERC725/ERC735, ERC884, ERC1400/ERC1404
+
 ## Facet Tests
 
-Per-Facet tests are simple to add if you follow the examples in `test/facets/Greeter.ts`, `test/facets/Farewell.ts`, and most critically `test/facets/index.ts` which is all that needs to be changed to add new conforming Facet tests.
+Per-Facet tests are simple to add if you follow the examples in `test/facets/Greeter.ts`, `test/facets/Farewell.ts`, and most critically `test/facets/index.ts` which is all that needs to be changed to construct and test Diamonds from the available facets.
 
 A Facet test conforms if: it exposes a `runTest` function that takes the diamond address, the owner, and a counter representing which Facet this is (should account for the 3 Base Facets), and then calls `describe`, passing it the local Facet test callback to execute.
 
-Tests that conform to this pattern need only be required in the `test/facets/index.ts` file and added to the 2 arrays greeter/farewell are currently added to as examples. Non-conforming tests can be added/required/adapted into the `test/Diamond.ts` file.
+Tests that conform to this pattern need only be required in the `test/facets/index.ts` file and added to array returned by `enabledFacets`. Non-conforming tests can be added/required/adapted into the `test/Diamond.ts` file. The `deployFacets`/`cutFacets`/`removeFacets` functions in `facet.ts` don't currently support the callback option of `diamondCut` (passes empty string), but will amend that to support optional callback functions to execute initialization functions as needed.
 
 ## Run tests:
 ```console
@@ -37,13 +43,10 @@ npx hardhat test
 
 ## Tasks
 
+### Diamond Management
+
+#### Construction & Deployments
 ```console
-// Call hello function from GreeterFacet through Diamond contract
-npx hardhat call-hello --network localhost --diamond 0xblah
-
-// Call goodbye function from FarewellFacet through Diamond contract
-npx hardhat call-goodbye --network localhost --diamond 0xblah
-
 // Deploy Facet, but don't cut
 npx hardhat facet-deploy --network localhost --name FarewellFacet
 
@@ -61,6 +64,140 @@ npx hardhat cut-add --network localhost --diamond 0xblah --facet 0xblah --name F
 
 // Cut upgraded Facet to Diamond (called by facet-upgrade)
 npx hardhat cut-replace --network localhost --diamond 0xblah --facet 0xblah --name FarewellFacet
+```
+
+#### Loupe Functions
+
+```
+// Get the facet address for a given function signature
+npx hardhat loupe-facet-address --network localhost --diamond 0xblah --func 0xblah
+
+// Get a list of facet addresses for a given diamond
+npx hardhat loupe-facet-addresses --network localhost --diamond 0xblah
+
+// Get the selectors for a given facet
+npx hardhat loupe-facet-function-selectors --network localhost --diamond 0xblah --facet 0xblah
+
+// Get the facets for a given diamond
+npx hardhat loupe-facets --network localhost --diamond 0xblah
+
+```
+
+#### Testing Functions
+
+```
+// Call hello function from GreeterFacet through Diamond contract
+npx hardhat call-hello --network localhost --diamond 0xblah
+
+// Call goodbye function from FarewellFacet through Diamond contract
+npx hardhat call-goodbye --network localhost --diamond 0xblah
+
+// Get the msg set in app storage through PersistentFacet1
+npx hardhat storage-app-msg --network localhost --diamond 0xblah
+
+// Get the msg set in app storage through PersistentFacet2
+npx hardhat storage-app-msg-clone --network localhost --diamond 0xblah
+
+// Get the greeting set in diamond storage through PersistentFacet2
+npx hardhat storage-ds-greeting --network localhost --diamond 0xblah
+
+// Set the msg in app storage through PersistentFacet1
+npx hardhat storage-app-msg-set --network localhost --diamond 0xblah --msg blah
+
+// Set the greeting in diamond storage through PersistentFacet2
+npx hardhat storage-ds-greeting-set --network localhost --diamond 0xblah --greeting blah
+
+```
+
+### ERC20 Management
+
+```console
+// Get the total supply for a given diamond
+npx hardhat erc20-symbol --network localhost --diamond 0xblah
+
+// Get the total supply for a given diamond
+npx hardhat erc20-name --network localhost --diamond 0xblah
+
+// Get the total supply for a given diamond
+npx hardhat erc20-decimals --network localhost --diamond 0xblah
+
+// Get the total supply for a given diamond
+npx hardhat erc20-total-supply --network localhost --diamond 0xblah
+
+// Get the signer balance for a given diamond
+npx hardhat erc20-balance --network localhost --diamond 0xblah
+
+// Get the total supply for a given diamond
+npx hardhat erc20-allowance --network localhost --diamond 0xblah --owner 0xblah --spender 0xblah
+
+// Get the total supply for a given diamond
+npx hardhat erc20-approve --network localhost --diamond 0xblah --spender 0xblah --amount 1000
+
+// Get the total supply for a given diamond
+npx hardhat erc20-transfer --network localhost --diamond 0xblah --to 0xblah --amount 1000
+
+// Get the total supply for a given diamond
+npx hardhat erc20-transfer-from --network localhost --diamond 0xblah --from 0xblah --to 0xblah --amount 1000
+
+
+```
+
+### ERC721 Management
+
+```console
+// Get the signer balance for a given diamond
+npx hardhat erc721-balance --network localhost --diamond 0xblah
+
+// Get the total supply for a given diamond
+npx hardhat erc721-total-supply --network localhost --diamond 0xblah
+
+// Approve a spender for a token ID
+npx hardhat erc721-approve --network localhost --diamond 0xblah --spender 0xblah --id 1
+
+// Get approvals for a token ID
+npx hardhat erc721-get-approved --network localhost --diamond 0xblah --id 1
+
+// Get approval status for an owner=>operator
+npx hardhat erc721-is-approved-for-all --network localhost --diamond 0xblah --owner 0xblah --operator 0xblah
+
+// Get the owner of a token ID
+npx hardhat erc721-owner --network localhost --diamond 0xblah --id 1
+
+// Call safeTransferFrom
+npx hardhat erc721-safe-transfer-from --network localhost --diamond 0xblah --from 0xblah --to 0xblah --id 1
+
+// Set approval status for an owner=>operator
+npx hardhat erc721-set-approved-for-all --network localhost --diamond 0xblah --owner 0xblah --operator 0xblah --approved 0
+
+// Call transferFrom
+npx hardhat erc721-transfer-from --network localhost --diamond 0xblah --from 0xblah --to 0xblah --id 1
+
+
+```
+
+### ERC1155 Management
+
+```console
+// Get the signer balance for a given diamond and token ID
+npx hardhat erc1155-balance --network localhost --diamond 0xblah --id 1
+
+// Get the total supply for a given diamond and token ID
+npx hardhat erc1155-total-supply --network localhost --diamond 0xblah --id 1
+
+// Get the signer balance for a given diamond and token ID
+npx hardhat erc1155-balance-batch --network localhost --diamond 0xblah --id 1
+
+// Get the signer balance for a given diamond and token ID
+npx hardhat erc1155-is-approved-for-all --network localhost --diamond 0xblah --owner 0xblah --operator 0xblah
+
+// Get the signer balance for a given diamond and token ID
+npx hardhat erc1155-safe-batch-transfer-from --network localhost --diamond 0xblah --from 0xblah --to 0xblah --id 1 --amount 1
+
+// Get the signer balance for a given diamond and token ID
+npx hardhat erc1155-safe-transfer-from --network localhost --diamond 0xblah  --from 0xblah --to 0xblah --id 1 --amount 1
+
+// Get the signer balance for a given diamond and token ID
+npx hardhat erc1155-set-approved-for-all --network localhost --diamond 0xblah  --operator 0xblah --approved 0
 
 ```
 

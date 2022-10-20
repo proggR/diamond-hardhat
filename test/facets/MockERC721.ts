@@ -35,7 +35,7 @@ const test = async() => {
     addresses = await diamondLoupeFacet.facetAddresses()
   })
 
-  it('Should have a token minted to signer address', async () => {
+  step('Should have a token minted to signer address', async () => {
     const signers =  await ethers.getSigners();
     const signer = signers[0]
     const tx = await facet.construct()
@@ -43,19 +43,19 @@ const test = async() => {
     expect(total).to.be.equal(1)
   })
 
-  it('Should identify as the owner of ID #1', async () => {
+  step('Should identify as the owner of ID #1', async () => {
     const signers =  await ethers.getSigners();
     const signer = signers[0]
     const owner = await facet.ownerOf(1)
     expect(owner).to.be.equal(signer.address)
   })
 
-  it('Should get back tokenURI served from ipfs.io', async () => {
+  step('Should get back tokenURI served from ipfs.io', async () => {
     const tokenURI = await facet.tokenURI(1)
     expect(tokenURI).to.be.equal("https://ipfs.io/ipfs/Qme7ss3ARVgxv6rXqVPiikMJ8u2NLgmgszg13pYrDKEoiu")
   })
 
-  it('Should get an error when I request a URI for a token that doesn\'t exist', async () => {
+  step('Should get an error when I request a URI for a token that doesn\'t exist', async () => {
     try {
       const tokenURI = await facet.tokenURI(2)
       expect(tokenURI).to.be.equal("https://ipfs.io/ipfs/Qme7ss3ARVgxv6rXqVPiikMJ8u2NLgmgszg13pYrDKEoiu")

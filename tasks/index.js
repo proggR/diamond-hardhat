@@ -1,4 +1,5 @@
 exports.diamond = require("./diamond")
+exports.test = require("./test")
 exports.erc20 = require("./erc20")
 exports.erc721 = require("./erc721")
 exports.erc1155 = require("./erc1155")

@@ -38,21 +38,21 @@ const test = async() => {
     addresses = await diamondLoupeFacet.facetAddresses()
   })
 
-  it('Should get "MESSAGE1" back from M1 (if Persistent1.ts has ran first)', async () => {
+  step('Should get "MESSAGE1" back from M1 (if Persistent1.ts has ran first)', async () => {
     assert.equal(
       'MESSAGE1',
       await facet.l1()
     )
   })
 
-  it('Should get "MESSAGE2" back from M2 (if Persistent1.ts has ran first)', async () => {
+  step('Should get "MESSAGE2" back from M2 (if Persistent1.ts has ran first)', async () => {
     assert.equal(
       'MESSAGE2',
       await facet.l2()
     )
   })
 
-  it('Should fail when fetching diamond storage greeting', async () => {
+  step('Should fail when fetching diamond storage greeting', async () => {
     try{
       //it should actually throw an error. not sure how to handle less grossly atm
       const resp = await facet.getDS()
@@ -66,19 +66,19 @@ const test = async() => {
   })
 
 
-  it('Should set diamond storage greeting to "HOLA"', async () => {
+  step('Should set diamond storage greeting to "HOLA"', async () => {
     let tx = await facet.setDS('HOLA')
     await tx.wait()
   })
 
-  it('Should get "HOLA" back from diamond storage greeting', async () => {
+  step('Should get "HOLA" back from diamond storage greeting', async () => {
       assert.equal(
         'HOLA',
         await facet.getDS()
       )
   })
 
-  it('Should remove itself and have the zero address + error when getDS is called (0xa32e0f3f)', async () => {
+  step('Should remove itself and have the zero address + error when getDS is called (0xa32e0f3f)', async () => {
     let selector = get(getSelectors(facet),['getDS()'])[0];
     let idx = count-1
     const oldAddress = await diamondLoupeFacet.facetAddress(selector)
@@ -100,7 +100,7 @@ const test = async() => {
     }
   })
 
-  it('Should readd itself and once again get HOLA from getDS (0xa32e0f3f)', async () => {
+  step('Should readd itself and once again get HOLA from getDS (0xa32e0f3f)', async () => {
     let selector = get(getSelectors(facet),['getDS()'])[0];
     let idx = count-1
     const oldAddress = await diamondLoupeFacet.facetAddress(selector)
@@ -122,14 +122,14 @@ const test = async() => {
     )
   })
 
-  it('Should get "MESSAGE1" back from M1 (if AppStorage is working after upgrade)', async () => {
+  step('Should get "MESSAGE1" back from M1 (if AppStorage is working after upgrade)', async () => {
     assert.equal(
       'MESSAGE1',
       await facet.l1()
     )
   })
 
-  it('Should get "MESSAGE2" back from M2 (if AppStorage is working after upgrade)', async () => {
+  step('Should get "MESSAGE2" back from M2 (if AppStorage is working after upgrade)', async () => {
     assert.equal(
       'MESSAGE2',
       await facet.l2()

@@ -35,7 +35,7 @@ const test = async() => {
     addresses = await diamondLoupeFacet.facetAddresses()
   })
 
-  it('Should fail when fetching M1', async () => {
+  step('Should fail when fetching M1', async () => {
     try{
       //it should actually throw an error. not sure how to handle less grossly atm
       assert.notEqual(
@@ -47,7 +47,7 @@ const test = async() => {
     }
   })
 
-  it('Should fail when fetching M2', async () => {
+  step('Should fail when fetching M2', async () => {
     try{
       //it should actually throw an error. not sure how to handle less grossly atm
       assert.notEqual(
@@ -59,22 +59,22 @@ const test = async() => {
     }
   })
 
-  it('Should set M1 to "MESSAGE1"', async () => {
+  step('Should set M1 to "MESSAGE1"', async () => {
     await facet.setM1('MESSAGE1')
   })
 
-  it('Should set M2 to "MESSAGE2"', async () => {
+  step('Should set M2 to "MESSAGE2"', async () => {
       await facet.setM2('MESSAGE2')
   })
 
-  it('Should get "MESSAGE1" back from M1', async () => {
+  step('Should get "MESSAGE1" back from M1', async () => {
     assert.equal(
       'MESSAGE1',
       await facet.loadM1()
     )
   })
 
-  it('Should get "MESSAGE2" back from M2', async () => {
+  step('Should get "MESSAGE2" back from M2', async () => {
     assert.equal(
       'MESSAGE2',
       await facet.loadM2()

@@ -35,7 +35,7 @@ const test = async() => {
     addresses = await diamondLoupeFacet.facetAddresses()
   })
 
-  it('Should have a total supply larger than 0', async () => {
+  step('Should have a total supply larger than 0', async () => {
     const signers =  await ethers.getSigners();
     const signer = signers[0]
     const tx = await facet.construct()
@@ -43,7 +43,7 @@ const test = async() => {
     expect(total).to.be.greaterThan(0)
   })
 
-  it('Should have total supply when calling balanceOf(signer) and totalSupply()', async () => {
+  step('Should have total supply when calling balanceOf(signer) and totalSupply()', async () => {
     const signers =  await ethers.getSigners();
     const signer = signers[0]
     const balance = await facet.balanceOf(signer.address)

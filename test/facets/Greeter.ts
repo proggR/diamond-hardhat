@@ -36,7 +36,7 @@ const test = async() => {
   })
 
 
-  it('Should respond to hello (0x19ff1d21)', async () => {
+  step('Should respond to hello (0x19ff1d21)', async () => {
     let selector = get(getSelectors(facet),['hello()']);
     let idx = count-1
     assert.equal(
@@ -45,7 +45,7 @@ const test = async() => {
     )
   })
 
-  it('Should get "hola" back from hello call (0x19ff1d21)', async () => {
+  step('Should get "hola" back from hello call (0x19ff1d21)', async () => {
     assert.equal(
       'hola',
       await facet.hello()

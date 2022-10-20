@@ -10,6 +10,7 @@ const { deployDiamond } = require('../lib/diamond/deploy.ts')
 const { deployFacets } = require('../lib/diamond/facet.ts')
 const { facets } = require('./facets')
 const { expect, assert } = require("chai");
+const { step } = require("mocha-steps");
 
 let diamondAddress
 let facetContracts
@@ -37,11 +38,11 @@ const diamondTest = async () => {
     ownershipFacet = await ethers.getContractAt('OwnershipFacet', diamondAddress)
   })
 
-  it("Deployment should do something", () => {
+  step("Deployment should do something", () => {
     expect("test").to.equal("test")
   });
 
-  it('Should have three facets -- call to facetAddresses function', async () => {
+  step('Should have three facets -- call to facetAddresses function', async () => {
     for (const address of await diamondLoupeFacet.facetAddresses()) {
       addresses.push(address)
     }
@@ -49,7 +50,7 @@ const diamondTest = async () => {
     assert.equal(addresses.length, 3)
   })
 
-  it('Facets should have the right function selectors -- call to facetFunctionSelectors function', async () => {
+  step('Facets should have the right function selectors -- call to facetFunctionSelectors function', async () => {
     let selectors = getSelectors(diamondCutFacet)
     result = await diamondLoupeFacet.facetFunctionSelectors(addresses[0])
     assert.sameMembers(result, selectors)
@@ -61,7 +62,7 @@ const diamondTest = async () => {
     assert.sameMembers(result, selectors)
   })
 
-  it('Selectors should be associated to facets correctly -- multiple calls to facetAddress function', async () => {
+  step('Selectors should be associated to facets correctly -- multiple calls to facetAddress function', async () => {
     assert.equal(
       addresses[0],
       await diamondLoupeFacet.facetAddress('0x1f931c1c')
@@ -83,7 +84,7 @@ const diamondTest = async () => {
 
   // START OF NON-BASE FACET TESTS
 
-  it('Should deploy facets -- test count returned against number defined', async () => {
+  step('Should deploy facets -- test count returned against number defined', async () => {
     const FacetNames = facets.facetNames()
 
     try{
@@ -97,26 +98,36 @@ const diamondTest = async () => {
     assert(true,true)
   })
 
-  it('Should test the facets', async () => {
+  step('Should test the facets', async () => {
     const test = async() =>{
-      for (const facet of facets.getFacets()) {
+      for (const facet of facets.enabledFacets()) {
         ctr++
         await facet.runTest(diamondAddress, contractOwner,ctr);
       }
     }
     await test()
   })
+  // .then(()=>{
+  //   step('Should complete', async () => {
+  //     const FacetNames = facets.facetNames()
+  //     let ctr = 0
+  //     for(const Facet of facetContracts){
+  //       console.log(FacetNames[ctr],':',Facet.address)
+  //       ctr++
+  //     }
+  //   })
+  //
+  //   step('Should echo addresses', async () => {
+  //     console.log("DIAMOND: ",diamondAddress)
+  //     for (const address of await diamondLoupeFacet.facetAddresses()) {
+  //       console.log("DIAMOND: ",address)
+  //     }
+  //   })
+  // })
 
-  it('Should complete', async () => {
-    const FacetNames = facets.facetNames()
-    let ctr = 0
-    for(const Facet of facetContracts){
-      console.log(FacetNames[ctr],':',Facet.address)
-      ctr++
-    }
-  })
 
-  // it('Should have five facets -- call to facetAddresses function', async () => {
+
+  // step('Should have five facets -- call to facetAddresses function', async () => {
   //   addresses.splice(0,addresses.length)
   //   for (const address of await diamondLoupeFacet.facetAddresses()) {
   //     addresses.push(address)
@@ -131,7 +142,4 @@ const coreTest = async() => {
   return {msg:'Success'}
 }
 
-coreTest().then((data)=>{
-  console.log("AND WE'VE ARRIVED")
-  console.log(data.msg)
-})
+coreTest()
