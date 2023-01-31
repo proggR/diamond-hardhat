@@ -90,7 +90,7 @@ contract MockERC1155Facet is AppStorageFacet, ERC1155StorageFacet, IERC1155 {
     _transfer(from_, to_, id_, amount_);
 
     emit TransferSingle(msg.sender, from_, to_, id_, amount_);
-    _requireReciever(from_,to_,id_,amount_, data_);
+    _requireReceiver(from_,to_,id_,amount_, data_);
   }
 
   function _safeBatchTransferFrom(address from_, address to_, uint256[] memory ids_, uint256[] memory amounts_, bytes memory data_) private {
@@ -103,7 +103,7 @@ contract MockERC1155Facet is AppStorageFacet, ERC1155StorageFacet, IERC1155 {
     }
 
     emit TransferBatch(msg.sender, from_, to_, ids_, amounts_);
-    _requireBatchReciever(from_,to_,ids_,amounts_, data_);
+    _requireBatchReceiver(from_,to_,ids_,amounts_, data_);
   }
 
 
@@ -136,7 +136,7 @@ contract MockERC1155Facet is AppStorageFacet, ERC1155StorageFacet, IERC1155 {
 
     emit TransferSingle(msg.sender, address(0), to_, _id, amount_);
 
-    _requireReciever(address(0), to_, _id, amount_, data_);
+    _requireReceiver(address(0), to_, _id, amount_, data_);
   }
 
   function _requireAuth(address account_) private view {
@@ -152,11 +152,11 @@ contract MockERC1155Facet is AppStorageFacet, ERC1155StorageFacet, IERC1155 {
     require(_ds._balances[id_][account_] >= amount_, "ERC1155: Insufficient balance");
   }
 
-  function _requireReciever(address from_, address to_, uint256 tokenID_, uint256 amount_, bytes memory data_) private {
+  function _requireReceiver(address from_, address to_, uint256 tokenID_, uint256 amount_, bytes memory data_) private {
     require(_checkOnERC1155Received(from_, to_, tokenID_, amount_, data_), "ERC1155: transfer to non ERC1155Receiver implementer");
   }
 
-  function _requireBatchReciever(address from_, address to_, uint256[] memory tokenIDs_, uint256[] memory amounts_, bytes memory data_) private {
+  function _requireBatchReceiver(address from_, address to_, uint256[] memory tokenIDs_, uint256[] memory amounts_, bytes memory data_) private {
     require(_checkOnERC1155BactchReceived(from_, to_, tokenIDs_, amounts_, data_), "ERC1155: transfer to non ERC1155Receiver implementer");
   }
 
