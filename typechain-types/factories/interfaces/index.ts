@@ -8,5 +8,8 @@ export { IERC1155Receiver__factory } from "./IERC1155Receiver__factory";
 export { IERC165__factory } from "./IERC165__factory";
 export { IERC173__factory } from "./IERC173__factory";
 export { IERC20__factory } from "./IERC20__factory";
+export { IERC20Burnable__factory } from "./IERC20Burnable__factory";
+export { IERC20Events__factory } from "./IERC20Events__factory";
+export { IERC20Mintable__factory } from "./IERC20Mintable__factory";
 export { IERC721__factory } from "./IERC721__factory";
 export { IERC721Receiver__factory } from "./IERC721Receiver__factory";

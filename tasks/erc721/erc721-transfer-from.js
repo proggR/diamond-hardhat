@@ -4,14 +4,7 @@ task("erc721-transfer-from", "Calls balanceOf function")
   .addParam("to", "The account to transfer to")
   .addParam("id", "The amount to transfer")
   .setAction(async (taskArgs, hre) => {
-    const accounts = await ethers.getSigners()
-    const signer = accounts[0]
-
-    const Facet = await ethers.getContractFactory("MockERC721Facet")
-    const facet = new ethers.Contract(taskArgs.diamond,Facet.interface, signer)
-    console.log('MockERC721 interface fetched:', facet.address)
-
-    const tx = await facet.transferFrom(taskArgs.from, taskArgs.to, tarskArgs.id)
+    const tx = await (await Facet(hre, A(taskArgs.diamond), "ERC721")).i.transferFrom(taskArgs.from, taskArgs.to, taskArgs.id)
     console.log("RESPONSE: ",tx)
   }
 )

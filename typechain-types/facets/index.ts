@@ -3,11 +3,14 @@
 /* eslint-disable */
 export type { DiamondCutFacet } from "./DiamondCutFacet";
 export type { DiamondLoupeFacet } from "./DiamondLoupeFacet";
-export type { FarewellFacet } from "./FarewellFacet";
-export type { GreeterFacet } from "./GreeterFacet";
-export type { MockERC1155Facet } from "./MockERC1155Facet";
-export type { MockERC20Facet } from "./MockERC20Facet";
-export type { MockERC721Facet } from "./MockERC721Facet";
+export type { ERC1155 } from "./ERC1155";
+export type { ERC20 } from "./ERC20";
+export type { ERC20Base } from "./ERC20Base";
+export type { ERC20Burnable } from "./ERC20Burnable";
+export type { ERC20Mintable } from "./ERC20Mintable";
+export type { ERC721 } from "./ERC721";
+export type { Farewell } from "./Farewell";
+export type { Greeter } from "./Greeter";
 export type { OwnershipFacet } from "./OwnershipFacet";
-export type { PersistentFacet1 } from "./PersistentFacet1";
-export type { PersistentFacet2 } from "./PersistentFacet2";
+export type { Persistent1 } from "./Persistent1";
+export type { Persistent2 } from "./Persistent2";

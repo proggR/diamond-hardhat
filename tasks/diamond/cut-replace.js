@@ -6,8 +6,6 @@ task("cut-replace", "Replaces a facet on a diamond")
   .addParam("facet", "The address of the Facet contract that you want to add to the Diamond")
   .addParam("name", "The contract name Facet contract that you want to add to the Diamond (will improve to not need)")
   .setAction(async (taskArgs) => {
-    const contractAddr = taskArgs.diamond
-    const networkId = network.name
 
     const accounts = await ethers.getSigners()
     const signer = accounts[0]
@@ -16,7 +14,7 @@ task("cut-replace", "Replaces a facet on a diamond")
     const facetContract = new ethers.Contract(taskArgs.facet, Facet.interface, signer)
     const facets = [facetContract]
 
-    await facetLib.cutFacets(contractAddr,diamondLib.FacetCutAction.Replace,facets);
+    await facetLib.cutFacets(taskArgs.diamond,diamondLib.FacetCutAction.Replace,facets);
 
     if (["hardhat", "localhost", "ganache"].indexOf(network.name) >= 0) {
       console.log("You'll have to manually update the value since you're on a local chain!")

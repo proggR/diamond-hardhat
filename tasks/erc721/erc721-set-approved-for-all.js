@@ -3,14 +3,7 @@ task("erc721-set-approved-for-all", "Calls balanceOf function")
   .addParam("operator", "The account to check approval for")
   .addParam("approved", "The approval status (1 or 0)")
   .setAction(async (taskArgs, hre) => {
-    const accounts = await ethers.getSigners()
-    const signer = accounts[0]
-
-    const Facet = await ethers.getContractFactory("MockERC721Facet")
-    const facet = new ethers.Contract(taskArgs.diamond,Facet.interface, signer)
-    console.log('MockERC721 interface fetched:', facet.address)
-
-    const tx = await facet.setApprovedForAll(tarskArgs.operator,taskArgs.approved)
+    const tx = await (await Facet(hre, A(taskArgs.diamond), "ERC721")).i.setApprovalForAll(taskArgs.operator,taskArgs.approved)
     console.log("RESPONSE: ",tx)
   }
 )

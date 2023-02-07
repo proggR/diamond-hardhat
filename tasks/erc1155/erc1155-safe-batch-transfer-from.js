@@ -5,14 +5,7 @@ task("erc1155-safe-batch-transfer-from", "Calls balanceOf function")
   .addParam("id", "The token ID")
   .addParam("amount", "The amount to transfer")
   .setAction(async (taskArgs, hre) => {
-    const accounts = await ethers.getSigners()
-    const signer = accounts[0]
-
-    const Facet = await ethers.getContractFactory("MockERC1155Facet")
-    const facet = new ethers.Contract(taskArgs.diamond,Facet.interface, signer)
-    console.log('MockERC1155 interface fetched:', facet.address)
-
-    const tx = await facet.safeBatchTransferFrom(taskArgs.from, taskArgs.to, [tarskArgs.id], [tarskArgs.amount])
+    const tx = await (await Facet(hre, A(taskArgs.diamond), "ERC1155")).i.safeBatchTransferFrom(taskArgs.from, taskArgs.to, [taskArgs.id], [taskArgs.amount])
     console.log("RESPONSE: ",tx)
   }
 )

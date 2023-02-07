@@ -1,8 +1,18 @@
-import { HardhatUserConfig } from "hardhat/config";
+import { HardhatUserConfig,extendEnvironment } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
 
 // require("@nomiclabs/hardhat-waffle")
 // require("@nomiclabs/hardhat-etherscan")
+
+extendEnvironment((hre) => {
+  const { Diamond, Facet, Facets, Signer, CA, A } = require("./lib/shinyblocks/shinyblocks")    
+  hre.Diamond = Diamond;
+  hre.Facet = Facet;
+  hre.Facets = Facets;
+  hre.Signer = Signer;
+  hre.CA = CA;
+  hre.A = A;
+});
 require("hardhat-deploy")
 // require("solidity-coverage")
 require("hardhat-gas-reporter")
@@ -98,6 +108,9 @@ const config: HardhatUserConfig = {
   },
   solidity: {
     compilers: [
+      {
+        version: "0.8.16",
+      },
       {
         version: "0.8.9",
       },

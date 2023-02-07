@@ -1,0 +1,3 @@
+[submodule "lib/shinyblocks"]
+	path = lib/shinyblocks
+	url = https://github.com/DEITrust/shinyblocks.git

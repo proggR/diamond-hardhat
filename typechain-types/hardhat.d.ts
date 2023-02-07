@@ -25,37 +25,49 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.DiamondLoupeFacet__factory>;
     getContractFactory(
-      name: "FarewellFacet",
+      name: "ERC1155",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.FarewellFacet__factory>;
+    ): Promise<Contracts.ERC1155__factory>;
     getContractFactory(
-      name: "GreeterFacet",
+      name: "ERC20",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.GreeterFacet__factory>;
+    ): Promise<Contracts.ERC20__factory>;
     getContractFactory(
-      name: "MockERC1155Facet",
+      name: "ERC20Base",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.MockERC1155Facet__factory>;
+    ): Promise<Contracts.ERC20Base__factory>;
     getContractFactory(
-      name: "MockERC20Facet",
+      name: "ERC20Burnable",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.MockERC20Facet__factory>;
+    ): Promise<Contracts.ERC20Burnable__factory>;
     getContractFactory(
-      name: "MockERC721Facet",
+      name: "ERC20Mintable",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.MockERC721Facet__factory>;
+    ): Promise<Contracts.ERC20Mintable__factory>;
+    getContractFactory(
+      name: "ERC721",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC721__factory>;
+    getContractFactory(
+      name: "Farewell",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Farewell__factory>;
+    getContractFactory(
+      name: "Greeter",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Greeter__factory>;
     getContractFactory(
       name: "OwnershipFacet",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.OwnershipFacet__factory>;
     getContractFactory(
-      name: "PersistentFacet1",
+      name: "Persistent1",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.PersistentFacet1__factory>;
+    ): Promise<Contracts.Persistent1__factory>;
     getContractFactory(
-      name: "PersistentFacet2",
+      name: "Persistent2",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.PersistentFacet2__factory>;
+    ): Promise<Contracts.Persistent2__factory>;
     getContractFactory(
       name: "IDiamondCut",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -84,6 +96,18 @@ declare module "hardhat/types/runtime" {
       name: "IERC20",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC20__factory>;
+    getContractFactory(
+      name: "IERC20Burnable",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC20Burnable__factory>;
+    getContractFactory(
+      name: "IERC20Events",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC20Events__factory>;
+    getContractFactory(
+      name: "IERC20Mintable",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC20Mintable__factory>;
     getContractFactory(
       name: "IERC721",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -117,45 +141,60 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.DiamondLoupeFacet>;
     getContractAt(
-      name: "FarewellFacet",
+      name: "ERC1155",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.FarewellFacet>;
+    ): Promise<Contracts.ERC1155>;
     getContractAt(
-      name: "GreeterFacet",
+      name: "ERC20",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.GreeterFacet>;
+    ): Promise<Contracts.ERC20>;
     getContractAt(
-      name: "MockERC1155Facet",
+      name: "ERC20Base",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.MockERC1155Facet>;
+    ): Promise<Contracts.ERC20Base>;
     getContractAt(
-      name: "MockERC20Facet",
+      name: "ERC20Burnable",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.MockERC20Facet>;
+    ): Promise<Contracts.ERC20Burnable>;
     getContractAt(
-      name: "MockERC721Facet",
+      name: "ERC20Mintable",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.MockERC721Facet>;
+    ): Promise<Contracts.ERC20Mintable>;
+    getContractAt(
+      name: "ERC721",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC721>;
+    getContractAt(
+      name: "Farewell",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Farewell>;
+    getContractAt(
+      name: "Greeter",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Greeter>;
     getContractAt(
       name: "OwnershipFacet",
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.OwnershipFacet>;
     getContractAt(
-      name: "PersistentFacet1",
+      name: "Persistent1",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.PersistentFacet1>;
+    ): Promise<Contracts.Persistent1>;
     getContractAt(
-      name: "PersistentFacet2",
+      name: "Persistent2",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.PersistentFacet2>;
+    ): Promise<Contracts.Persistent2>;
     getContractAt(
       name: "IDiamondCut",
       address: string,
@@ -191,6 +230,21 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.IERC20>;
+    getContractAt(
+      name: "IERC20Burnable",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC20Burnable>;
+    getContractAt(
+      name: "IERC20Events",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC20Events>;
+    getContractAt(
+      name: "IERC20Mintable",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC20Mintable>;
     getContractAt(
       name: "IERC721",
       address: string,

@@ -3,11 +3,14 @@
 /* eslint-disable */
 export { DiamondCutFacet__factory } from "./DiamondCutFacet__factory";
 export { DiamondLoupeFacet__factory } from "./DiamondLoupeFacet__factory";
-export { FarewellFacet__factory } from "./FarewellFacet__factory";
-export { GreeterFacet__factory } from "./GreeterFacet__factory";
-export { MockERC1155Facet__factory } from "./MockERC1155Facet__factory";
-export { MockERC20Facet__factory } from "./MockERC20Facet__factory";
-export { MockERC721Facet__factory } from "./MockERC721Facet__factory";
+export { ERC1155__factory } from "./ERC1155__factory";
+export { ERC20__factory } from "./ERC20__factory";
+export { ERC20Base__factory } from "./ERC20Base__factory";
+export { ERC20Burnable__factory } from "./ERC20Burnable__factory";
+export { ERC20Mintable__factory } from "./ERC20Mintable__factory";
+export { ERC721__factory } from "./ERC721__factory";
+export { Farewell__factory } from "./Farewell__factory";
+export { Greeter__factory } from "./Greeter__factory";
 export { OwnershipFacet__factory } from "./OwnershipFacet__factory";
-export { PersistentFacet1__factory } from "./PersistentFacet1__factory";
-export { PersistentFacet2__factory } from "./PersistentFacet2__factory";
+export { Persistent1__factory } from "./Persistent1__factory";
+export { Persistent2__factory } from "./Persistent2__factory";

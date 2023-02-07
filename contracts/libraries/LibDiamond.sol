@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity 0.8.16;
 
 /******************************************************************************\
 * Author: Nick Mudge <nick@perfectabstractions.com> (https://twitter.com/mudgen)
@@ -72,7 +72,7 @@ library LibDiamond {
         address _init,
         bytes memory _calldata
     ) internal {
-        for (uint256 facetIndex; facetIndex < _diamondCut.length; facetIndex++) {
+        for (uint256 facetIndex = 0; facetIndex < _diamondCut.length; facetIndex++) {
             IDiamondCut.FacetCutAction action = _diamondCut[facetIndex].action;
             if (action == IDiamondCut.FacetCutAction.Add) {
                 addFunctions(_diamondCut[facetIndex].facetAddress, _diamondCut[facetIndex].functionSelectors);
@@ -97,7 +97,7 @@ library LibDiamond {
         if (selectorPosition == 0) {
             addFacet(ds, _facetAddress);            
         }
-        for (uint256 selectorIndex; selectorIndex < _functionSelectors.length; selectorIndex++) {
+        for (uint256 selectorIndex = 0; selectorIndex < _functionSelectors.length; selectorIndex++) {
             bytes4 selector = _functionSelectors[selectorIndex];
             address oldFacetAddress = ds.selectorToFacetAndPosition[selector].facetAddress;
             require(oldFacetAddress == address(0), "LibDiamondCut: Can't add function that already exists");
@@ -115,7 +115,7 @@ library LibDiamond {
         if (selectorPosition == 0) {
             addFacet(ds, _facetAddress);
         }
-        for (uint256 selectorIndex; selectorIndex < _functionSelectors.length; selectorIndex++) {
+        for (uint256 selectorIndex = 0; selectorIndex < _functionSelectors.length; selectorIndex++) {
             bytes4 selector = _functionSelectors[selectorIndex];
             address oldFacetAddress = ds.selectorToFacetAndPosition[selector].facetAddress;
             require(oldFacetAddress != _facetAddress, "LibDiamondCut: Can't replace function with same function");
@@ -130,7 +130,7 @@ library LibDiamond {
         DiamondStorage storage ds = diamondStorage();
         // if function does not exist then do nothing and return
         require(_facetAddress == address(0), "LibDiamondCut: Remove facet address must be address(0)");
-        for (uint256 selectorIndex; selectorIndex < _functionSelectors.length; selectorIndex++) {
+        for (uint256 selectorIndex = 0; selectorIndex < _functionSelectors.length; selectorIndex++) {
             bytes4 selector = _functionSelectors[selectorIndex];
             address oldFacetAddress = ds.selectorToFacetAndPosition[selector].facetAddress;
             removeFunction(ds, oldFacetAddress, selector);
